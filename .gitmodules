@@ -1,0 +1,12 @@
+[submodule "lib/typesettings"]
+	path = lib/typesettings
+	url = https://github.com/ianrose/typesettings.git
+[submodule "lib/breakpoint"]
+	path = lib/breakpoint
+	url = https://github.com/at-import/breakpoint.git
+[submodule "lib/sass-mq"]
+	path = lib/sass-mq
+	url = https://github.com/sass-mq/sass-mq.git
+[submodule "lib/sass-css3-mixins"]
+	path = lib/sass-css3-mixins
+	url = https://github.com/matthieua/sass-css3-mixins.git

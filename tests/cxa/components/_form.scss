@@ -1,0 +1,135 @@
+/**
+ * The form configurations for CXA 
+ *
+ * @author Jack <jack.fu@cxagroup.com>
+ * @version 0.0.1
+ * @date Wed Nov 15 16:53:35 2017
+ *
+ * @import cxa/variables, cxa/core
+ * @import cxa/field
+ */
+
+.form--bounded {
+	max-width: $form-max-width;
+}
+
+.form--inline {
+	display: flex;
+	flex-wrap: wrap;
+}
+
+.form__alert {}
+
+.form__actions {
+	.form__alert + & {
+		margin-top: $spacing-unit;
+	}
+}
+
+$component: #{$css-prefix}field;
+$field-control-height: rem(36px);
+$field-border-color: $input-border;
+
+.#{$component} {
+
+  margin-bottom: $spacing-unit-small;
+
+  &--inline, &--inline-right, &--inline-boxed {
+//    display: flex;
+//    flex-wrap: wrap;
+//    display: inline-block;
+
+    .#{$component}__label-wrapper, .#{$component}__control-wrapper {
+      display: inline-block;
+      padding-left: $spacing-unit-smaller;
+      padding-right: $spacing-unit-smaller;
+    }
+
+    .#{$component}__control-wrapper {
+      //flex: 1;
+      display: inline-block;
+    }
+
+    .#{$component}__label {
+      line-height: $field-control-height;
+    }
+
+    .#{$component}__description {
+      margin-top: -$spacing-unit-tiny;
+    }
+
+  }
+
+  &--inline, &--inline-right {
+    margin-left: -$spacing-unit-smaller;
+    margin-right: -$spacing-unit-smaller;
+  }
+
+  &--inline-right {
+    .#{$component}__label-wrapper {
+      width: 33.333%;
+      text-align: right;
+    }
+
+    .#{$component}__description {
+      width: 96%; // Text shorter than label
+      margin-left: auto;
+    }
+  }
+
+  &--inline-boxed {
+    border: 1px solid $field-border-color;
+    border-radius: $global-radius;
+    background-color: colour(neutral, pure-white);
+    padding: 0.125em 0.25em;
+  }
+
+  .#{$component}__control-wrapper {
+    white-space: pre-line;
+  }
+}
+
+.#{$component}__label {
+  font-size: rem(14px);
+  // font-weight: bold;
+  // color: $input-label-foreground;
+  position: relative;
+  color: rgba(0,0,0,0.5);
+}
+
+.#{$component}__asterisk {
+  position: absolute;
+  right: 100%;
+  margin-right: $spacing-unit-miniscule;
+  color: $error-foreground; // HACK! :(
+}
+
+.#{$component}__control {
+
+}
+
+.#{$component}__description {
+  font-size: rem(11px);
+  font-style: italic;
+  color: $input-description-foreground;
+  line-height: 1;
+  margin-bottom: $spacing-unit-tiny;
+}
+
+.#{$component}__error {
+  font-size: rem(12px);
+  color: $error-foreground;
+  min-width: rem(1px);
+  min-height: rem(15px);
+  line-height: rem(15px);
+  padding-top: $spacing-unit-tiny;
+  &:before {
+    content: "\200B";
+  }
+}
+
+.#{$component}__meta-wrapper {
+  width: 100%;
+  padding-left: $spacing-unit-smaller;
+  padding-right: $spacing-unit-smaller;
+}

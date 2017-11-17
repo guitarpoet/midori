@@ -1,0 +1,73 @@
+/**
+ * The scss file for all the generic table function and mixins
+ *
+ * @author Jack <jack.fu@cxagroup.com>
+ * @version 0.0.1
+ * @date Wed Nov 15 14:40:59 2017
+ * @import mq
+ *
+ */
+
+/**
+ * The midori table responsive, you can use this to make your table work responsively
+ *
+ * Simple use this mixin like this:
+ *
+ * <code>
+ *
+ * .data-table {
+ *     @include midori-table-responsive($from: mobile) {
+ *         // Here put your styles for the responsive header of each td
+ *     }
+ * }
+ *
+ * </code>
+ *
+ * @parameter $from
+ *      From which width will make this table responsive 
+ * @parameter $attr
+ *      Get the responsive table header content from which attribute of the td, will be data-th by default
+ * @parameter $suffix
+ *      Add the suffix to the table header content, will be ": " by default
+ *
+ */
+@mixin midori-table-responsive($from: tablet, $attr: data-th, $suffix: ": ") {
+    th {
+        display: none;
+        @include mq($from: $from) {
+            display: table-cell;
+        }
+    }
+
+    td {
+        display: block;
+        @include mq($from: $from) {
+            display: table-cell;
+        }
+    }
+
+    td::before {
+        @content;
+        content: attr($attr) $suffix;
+        display: block;
+        font-weight: normal;
+
+        @include mq($from: $from) {
+            display: none;
+        }
+    }
+}
+
+@mixin midori-table-row($type: even) {
+    & > tbody > tr:nth-child(#{$type}) > td {
+        @content;
+    }
+}
+
+@mixin midori-table-responsive-row($from: tablet, $type: even) {
+    @include mq($until: $from) {
+        & > tbody > tr > td:nth-child(#{$type}) {
+            @content;
+        }
+    }
+}

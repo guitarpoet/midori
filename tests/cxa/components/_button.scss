@@ -1,0 +1,227 @@
+/**
+ * The button components for CXA
+ *
+ * @author Jack <jack.fu@cxagroup.com>
+ * @version 0.0.1
+ * @date Wed Nov 15 16:49:59 2017
+ *
+ * @import cxa/variables, cxa/colors, cxa/typography
+ */
+
+@mixin button-disabled() {
+  cursor: default;
+  color: colour(neutral, mid-grey);
+  border-color: colour(neutral, mid-grey);
+  background: colour(neutral, ultra-light-grey);
+}
+
+@mixin button-base() {
+  position: relative;
+  display: inline-block;
+  padding: 0.5625em 1.25em;
+  border: 0.125em solid;
+  border-radius: 0.125em;
+  vertical-align: middle;
+  font-family: $proxima-nova-semibold;
+  font-size: 1em;
+  transition: background 175ms ease-in-out,
+              border-color 175ms ease-in-out,
+              color 175ms ease-in-out,
+              box-shadow 175ms ease-in-out;
+
+  svg {
+    fill: currentColor;
+  }
+
+  &:disabled {
+    @include button-disabled();
+  }
+
+  &--submitting {
+    cursor: default;
+    pointer-events: none;
+    box-shadow: none;
+
+    span {
+      opacity: 0;
+    }
+  }
+
+  &__loader {
+    font-size: 10px;
+    position: absolute;
+    text-indent: -9999em;
+    opacity: 0.8;
+    border: rem(4px) solid currentColor;
+    border-left-color: rgba(#000, 0.3);
+    transform: translateZ(0);
+    animation: load8 1.1s infinite linear;
+    cursor: default;
+    top: 50%;
+    left: 50%;
+    margin-top: rem(-12px);
+    right: 0;
+    bottom: 0;
+    margin-left: rem(-12px);
+
+    &,
+    &::after {
+      border-radius: 50%;
+      width: rem(24px);
+      height: rem(24px);
+    }
+  }
+}
+
+@keyframes load8 {
+  0% {
+    transform: rotate(0deg);
+  }
+
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+.button,
+%button {
+  @include button-base();
+
+  color: colour(neutral, pure-white);
+  border-color: colour(cxa, salem);
+  background: colour(cxa, salem);
+
+  &--hover,
+  &:hover {
+    color: colour(neutral, pure-white);
+    border-color: colour(cxa, dark-salem);
+    background: colour(cxa, dark-salem);
+  }
+
+  &--active,
+  &:active {
+    color: colour(neutral, pure-white);
+    border-color: colour(cxa, dark-salem);
+    background: colour(cxa, dark-salem);
+  }
+
+  &--focus,
+  &:focus {
+    box-shadow: 0 0 3px colour(cxa, salem), 0 0 7px colour(cxa, salem);
+    outline: none;
+  }
+
+  &--disabled,
+  &:disabled {
+    cursor: default;
+    color: colour(neutral, ultra-light-grey);
+    border-color: colour(neutral, mid-grey);
+    background: colour(neutral, mid-grey);
+  }
+
+  span {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  svg {
+    margin-top: -0.5em;
+    margin-bottom: -0.5em;
+  }
+}
+
+// leave a margin between adjacent buttons
+.button + .button {
+  margin-left: 0.75em;
+}
+
+.button--primary {
+  @extend %button;
+
+  width: 100%;
+  text-align: center;
+}
+
+.button--secondary {
+  @include button-base();
+
+  color: colour(cxa, salem);
+  border-color: colour(cxa, salem);
+  background: colour(neutral, pure-white);
+
+  &--hover,
+  &:hover {
+    color: colour(cxa, deep-salem);
+    border-color: colour(cxa, dark-salem);
+    background: colour(neutral, pure-white);
+  }
+
+  &--active,
+  &:active {
+    color: colour(cxa, deep-salem);
+    border-color: colour(cxa, dark-salem);
+    background: colour(neutral, pure-white);
+  }
+
+  &--focus,
+  &:focus {
+    box-shadow: 0 0 3px colour(cxa, salem), 0 0 7px colour(cxa, salem);
+    outline: none;
+    background: colour(neutral, pure-white);
+  }
+}
+
+.button--tertiary {
+  cursor: pointer;
+  border: 0;
+  padding: 0.25em;
+  color: colour(cxa, salem);
+  background-color: transparent;
+  font-family: $proxima-nova-semibold;
+  font-size: 1em;
+  text-align: left;
+  border-radius: 8px;
+
+  span {
+    border-bottom: 0.125em solid transparent;
+  }
+
+  &--hover,
+  &:hover {
+    background-color: transparent;
+    color: colour(cxa, deep-salem);
+
+    span {
+      color: colour(cxa, deep-salem);
+      border-bottom-color: currentColor;
+    }
+
+    &.button--icon {
+      span {
+        border-bottom-color: transparent;
+      }
+    }
+  }
+
+  &--active,
+  &:active {
+    background-color: transparent;
+    color: colour(cxa, deep-salem);
+
+    span {
+      color: colour(cxa, deep-salem);
+      border-bottom-color: currentColor;
+    }
+  }
+
+  &--focus,
+  &:focus {
+    box-shadow: 0 0 3px colour(cxa, salem), 0 0 7px colour(cxa, salem);
+    outline: none;
+    background-color: transparent;
+  }
+
+  &:disabled {
+  }
+}

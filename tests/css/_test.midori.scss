@@ -1,0 +1,13 @@
+/**
+ * @import midori/core, midori/components/table
+ * @import cxa/typography, cxa/colors
+ * @import cxa/components/table, cxa/components/button, cxa/components/form
+ * @import cxa/components/textfield, cxa/components/datepicker, cxa/components/card
+ * @import cxa/blocks/header, cxa/blocks/main, cxa/blocks/footer
+ */
+
+body {
+    @extend .cxa-typography-base;
+    width: 100vw;
+}
+

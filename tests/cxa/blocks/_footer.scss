@@ -1,0 +1,63 @@
+/**
+ * The footer settings
+ *
+ * @author Jack <jack.fu@cxagroup.com>
+ * @version 0.0.1
+ * @date Wed Nov 15 17:46:15 2017
+ * @import cxa/core
+ *
+ */
+
+.footer-wrapper {
+  width: 100%;
+  background-color: colour(neutral, dark-grey);
+}
+
+.footer {
+  padding: $spacing-unit 0;
+  color: colour(neutral, pure-white);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+@media screen and (max-width: $break-cafe-creme) {
+.footer {
+  flex-direction: column-reverse;
+}
+}
+
+
+.footer__copy {
+  font-size: rem(13px);
+}
+@media screen and (max-width: $break-cafe-creme) {
+.footer__copy {
+  font-size: rem(10px);
+  white-space: nowrap;
+}
+}
+
+
+.footer__nav {
+
+}
+
+.footer__logo {
+  display: inline-block;
+  height: 40px;
+  width: 74px;
+  color: colour(neutral, mid-grey);
+  vertical-align: middle;
+  fill: currentColor;
+  margin: 0 -12px;
+}
+
+.footer__nav-item {
+  text-decoration: none;
+  font-size: rem(14px);
+  color: inherit;
+
+  & + & {
+    margin-left: $spacing-unit-small;
+  }
+}

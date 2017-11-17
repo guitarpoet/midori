@@ -1,0 +1,69 @@
+/**
+ * The utility functions for CXA
+ *
+ * @author Jack <jack.fu@cxagroup.com>
+ * @version 0.0.1
+ * @date Wed Nov 15 17:16:25 2017
+ * @import cxa/variables
+ */
+
+@mixin square($size) {
+  width: $size;
+  height: $size;
+}
+
+@function em($font-size, $important: false) {
+  @return ($font-size / $inuit-global-font-size) * 1em;
+}
+
+@function rem($size) {
+  @return ($size / $inuit-global-font-size) * 1rem;
+}
+
+@mixin font-size ($args...) {
+  @include inuit-font-size($args...);
+}
+
+@mixin hidden-visually ($args...) {
+  @include inuit-hidden-visually($args...);
+}
+
+@mixin inuit-font-size($font-size, $line-height: auto, $important: false) {
+
+  @if (type-of($font-size) == number) {
+    @if (unit($font-size) != "px") {
+      @error "`#{$font-size}` needs to be a pixel value.";
+    }
+  } @else {
+    @error "`#{$font-size}` needs to be a number.";
+  }
+
+  @if ($important == true) {
+    $important: !important;
+  } @elseif ($important == false) {
+    $important: null;
+  } @else {
+    @error "`#{$important}` needs to be `true` or `false`."
+  }
+
+  // We provide a `px` fallback for old IEs not supporting `rem` values.
+  font-size: $font-size $important;
+  font-size: ($font-size / $inuit-global-font-size) * 1rem $important;
+
+  @if ($line-height == 'auto') {
+    line-height: ceil($font-size / $inuit-global-line-height) * ($inuit-global-line-height / $font-size) $important;
+  }
+
+  @else {
+
+    @if (type-of($line-height) == number or $line-height == 'inherit' or $line-height == 'normal') {
+      line-height: $line-height $important;
+    }
+
+    @elseif ($line-height != 'none' and $line-height != false) {
+      @error "D’oh! `#{$line-height}` is not a valid value for `$line-height`."
+    }
+
+  }
+
+}

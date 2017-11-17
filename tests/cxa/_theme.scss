@@ -1,0 +1,38 @@
+/**
+ * The theme styles
+ *
+ * @author Jack <jack.fu@cxagroup.com>
+ * @version 0.0.1
+ * @date Wed Nov 15 17:21:16 2017
+ */
+
+//==============================================================================
+//
+// Themes
+//
+//==============================================================================
+
+$primary-color: #038743;
+$accent-color: #ec257a;
+$neutral-color: #242424;
+$divider-color: rgba(black, .0785);
+$input-border: #cacaca;
+$body-foreground: rgba(0,0,0,.8);
+$body-secondary-foreground: lighten($body-foreground, 20%);
+$input-label-foreground: rgba(black, .75);
+$input-description-foreground: rgba(black, .82);
+$disabled-foreground: colour(neutral, mid-grey);
+$disabled-background: colour(neutral, lightish-grey);
+$enabled-foreground: rgba(black, .54);
+$error-foreground: #d9534f;
+$card-shadow: 0px 1px 2px 0px rgba(0, 0, 0, 0.2);
+
+:root {
+  --body-foreground: $body-foreground;
+  --primary-color: $primary-color;
+  --accent-color: $accent-color;
+  --neutral-color: $neutral-color;
+  --disabled-foreground: $disabled-foreground;
+  --disabled-background: $disabled-background;
+
+}

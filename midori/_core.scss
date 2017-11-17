@@ -1,0 +1,49 @@
+/**
+ * This is the file to provide all core functions for midori
+ *
+ * @author Jack <jack.fu@cxagroup.com>
+ * @version 0.0.1
+ * @date Wed Nov 15 15:03:40 2017
+ */
+
+@function midori-get-keys($map) {
+    $keys: ();
+
+    @each $key, $val in $chart-colours {
+        $keys: append($keys, $key);
+    }
+
+    @return $keys;
+}
+
+/**
+ * Get the color from the palette for you
+ */
+@function midori-get-color($group, $name, $palette) {
+    $color: map-get(map-get($palette, $group), $name);
+
+    // if the colour isn't found in the provided palette, throw an error
+    @if $color == null {
+        @error "Color #{$name} not found in this palette #{$group}.";
+    }
+
+    @return $color;
+}
+
+$imported-once-files: () !default;
+
+/**
+ * Check if the module is already loaded yet
+ */
+@function not-imported($name) {
+    $imported-once-files: $imported-once-files !global;
+    $module_index: index($imported-once-files, $name);
+
+    @if $module_index == null or $module_index == false {
+        $imported-once-files: append($imported-once-files, $name);
+
+        @return true;
+    }
+
+    @return false;
+}

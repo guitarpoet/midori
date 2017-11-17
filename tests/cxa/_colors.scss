@@ -1,0 +1,88 @@
+/**
+ * The color settings for CXA
+ *
+ * @author Jack <jack.fu@cxagroup.com>
+ * @version 0.0.1
+ * @date Wed Nov 15 15:35:58 2017
+ * @import midori/core
+ */
+
+/**
+ * The color palette
+ */
+$palette: (
+  cxa: (
+    lighter-sushi: #03a450,
+    light-sushi: #92d84a,
+    sushi: #86c443,
+    dark-sushi: #77b03c,
+    salem: #038743, //adjusted from 039147 for colour contrast
+    dark-salem: #025e2e,
+    deep-salem: #025128,
+    light-amaranth: #ff2884,
+    amaranth: #ec257a,
+    dark-amaranth: #db2271,
+    light-disco: #b12470,
+    disco: #9e1f63,
+    deep-disco: #8b1c58,
+    banana-mania: #fdf1b2,
+  ),
+  neutral: (
+    pure-white: #fff,
+    ultra-light-grey: #f7f7f7,
+    lighter-grey: #e6e6e6,
+    lightish-grey: #d4d4d4,
+    light-grey: #c2c2c2,
+    mid-grey: #9e9e9e,
+    above-mid-grey: #58595b,
+    darkish-grey: #6e6e6e,
+    dark-grey: #353535,
+    pure-black: #000,
+  ),
+  highlight: (
+    light-amber: #ffae28,
+    amber: #eca125,
+    dark-amber: #d79322,
+    light-red: #ff2828,
+    red: #ec2525,
+    dark-red: #d72222,
+  ),
+);
+
+/**
+ * The api compatible for CXA
+ */
+@function colour($group, $name) {
+    @return midori-get-color($group, $name, $palette);
+}
+
+/**
+ * Colors for chart
+ */
+$chart-colours: (
+  default: colour(highlight, red),
+  0: colour(cxa, banana-mania),
+  1: colour(cxa, light-amaranth),
+  2: colour(neutral, lightish-grey),
+  3: colour(cxa, light-sushi),
+);
+
+$chart-colour-keys: get-keys(chart-colours);
+
+@function get-chart-colour($key) {
+  $colour: map-get($chart-colours, $key);
+
+  // if the colour isn't found in the provided palette, throw an error
+  @if $colour == null {
+    @error "Chart colour #{$key} not found.";
+  }
+  @return $colour;
+}
+
+@mixin get-chart-styling($property: "stroke") {
+  @each $key in $chart-colour-keys {
+    &--#{$key} {
+      #{$property}: get-chart-colour($key);
+    }
+  }
+}

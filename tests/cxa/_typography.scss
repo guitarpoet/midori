@@ -1,0 +1,207 @@
+/**
+ * The typography settings for CXA
+ *
+ * @author Jack
+ * @version 0.0.1
+ * @date Wed Nov 15 16:01:30 2017
+ * @import midory/core, cxa/core
+ */
+
+@font-face {
+  font-family: "Proxima Nova Light";
+  font-style: normal;
+  font-weight: lighter;
+  src: local("Proxoma Nova"), local("ProximaNova"),
+       url("../fonts/proxima-nova/proximanova-light-webfont.woff2") format("woff2"), // Super Modern Browsers
+       url("../fonts/proxima-nova/proximanova-light-webfont.woff") format("woff"), // Modern Browsers
+       url("../fonts/proxima-nova/proximanova-light-webfont.ttf") format("truetype"); // Safari, Android, iOS
+}
+
+// Proxima Nova Regular
+@font-face {
+  font-family: "Proxima Nova";
+  font-style: normal;
+  font-weight: normal;
+  src: local("Proxoma Nova"), local("ProximaNova"),
+       url("../fonts/proxima-nova/proximanova-regular-webfont.woff2") format("woff2"), // Super Modern Browsers
+       url("../fonts/proxima-nova/proximanova-regular-webfont.woff") format("woff"), // Modern Browsers
+       url("../fonts/proxima-nova/proximanova-regular-webfont.ttf") format("truetype"); // Safari, Android, iOS
+}
+
+// Proxima Nova Semi-Bold
+@font-face {
+  font-family: "Proxima Nova Semibold";
+  font-style: normal;
+  font-weight: bold;
+  src: local("Proxima Nova Semibold"), local("ProximaNova-Semibold"),
+       url("../fonts/proxima-nova/proximanova-semibold-webfont.woff2") format("woff2"), // Super Modern Browsers
+       url("../fonts/proxima-nova/proximanova-semibold-webfont.woff") format("woff"), // Modern Browsers
+       url("../fonts/proxima-nova/proximanova-semibold-webfont.ttf") format("truetype"); // Safari, Android, iOS
+}
+
+$proxima-nova-light: "Proxima Nova Light", "Open Sans", "Gill Sans MT", "Gill Sans", Corbel, Arial, sans-serif;
+$proxima-nova: "Proxima Nova", "Open Sans", "Gill Sans MT", "Gill Sans", Corbel, Arial, sans-serif;
+$proxima-nova-semibold: "Proxima Nova Semibold", "Open Sans", "Gill Sans MT", "Gill Sans", Corbel, Arial, sans-serif;
+
+.cxa-typography-base {
+    /**
+     * Global typography settings
+     */
+    font-family: $proxima-nova;
+}
+
+strong {
+  font-family: $proxima-nova-semibold;
+}
+
+//==============================================================================
+//
+// Heading
+//
+//==============================================================================
+
+$inuit-font-size-h1: 36px !default;
+$inuit-font-size-h2: 28px !default;
+$inuit-font-size-h3: 24px !default;
+$inuit-font-size-h4: 20px !default;
+$inuit-font-size-h5: 18px !default;
+$inuit-font-size-h6: 16px !default;
+
+
+//h1,
+.h1 {
+  @include inuit-font-size($inuit-font-size-h1);
+}
+
+//h2,
+.h2 {
+  @include inuit-font-size($inuit-font-size-h2);
+}
+
+//h3,
+.h3 {
+  @include inuit-font-size($inuit-font-size-h3);
+}
+
+//h4,
+.h4 {
+  @include inuit-font-size($inuit-font-size-h4);
+}
+
+//h5,
+.h5 {
+  @include inuit-font-size($inuit-font-size-h5);
+}
+
+//h6,
+.h6 {
+  @include inuit-font-size($inuit-font-size-h6);
+}
+
+
+// Typography
+//
+// Heavily influenced by http://typecast.com/blog/a-more-modern-scale-for-web-typography
+
+body {
+  font-family: $proxima-nova-light;
+  font-size: 100%;
+}
+
+// see https://developer.mozilla.org/en/docs/Web/CSS/font-size-adjust
+// http://caniuse.com/#feat=font-size-adjust
+body,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  //broken in flagged Chrome
+  //  font-size-adjust: 0.5;
+}
+
+p {
+  font-size: 0.88em; // equivalent to 14px
+  line-height: 1.43em; // equivalent to 20px
+  margin: 0 0 1rem;
+
+  @media (min-width: $break-espresso) {
+    font-size: 1em; // equivalent to 16px
+    line-height: 1.25; // equivalent to 20px
+  }
+
+  @media (min-width: $break-doppio) {
+    line-height: 1.375; // equivalent to 22px
+  }
+}
+
+figcaption,
+li {
+  font-size: 0.88em; // equivalent to 14px
+
+  @media (min-width: $break-espresso) {
+    font-size: 1em; // equivalent to 16px
+  }
+}
+
+h1 {
+  font-size: 2em; // 2x body copy size = 32px
+  line-height: 1.25; // 45px / 36px
+  margin: 0.5em 0;
+
+  @media (min-width: $break-doppio) {
+    font-size: 2.25em; // 2.25x body copy size = 36px
+    line-height: 1.11; // keep to a multiple of the 20px line height and something more appropriate for display headings
+  }
+}
+
+h2 {
+  font-size: 1.25em; // 20px
+  line-height: 1.5; // 30px / 26px
+  margin: 1.25rem 0 0.75rem;
+
+  @media (min-width: $break-doppio) {
+    font-size: 1.62em; // = 26px
+    line-height: 1.25;
+  }
+
+  @media (min-width: $break-cafe-creme) {
+    font-size: 1.75em; // = 28px
+  }
+}
+
+h3 {
+  font-size: 1.375em; // 1.375x body copy size = 22px
+  line-height: 1.13636364; // 25px / 22px
+  margin: 1.25rem 0 0.75rem;
+
+  @media (min-width: $break-doppio) {
+    font-size: 1.5em; // 1.5x body copy size = 24px
+    line-height: 1.25;
+  }
+
+  @media (min-width: $break-cafe-creme) {
+    font-size: 1.75em; // 1.75x body copy size = 28px
+  }
+}
+
+h4 {
+  font-size: 1.125em; // 1.125x body copy size = 18px
+  line-height: 1.11111111;// 20 px
+  margin: 1.25rem 0 0.75rem;
+
+  @media (min-width: $break-doppio) {
+    line-height: 1.22222222; // 22px / 18px
+  }
+}
+
+blockquote {
+  font-size: 1.25em; // 20px / 16px
+  line-height: 1.25; // 25px / 20px
+
+  @media (min-width: $break-doppio) {
+    font-size: 1.5em; // 24px / 16px
+    line-height: 1.45833333; // 35px / 24px
+  }
+}

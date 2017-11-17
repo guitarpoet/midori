@@ -1,0 +1,38 @@
+{
+	"name": "midori",
+	"version": "1.0.0",
+	"description": "The swiss knife for making sass better to use.",
+	"main": "index.js",
+	"directories": {
+		"test": "tests"
+	},
+	"scripts": {
+		"test": "echo fake test"
+	},
+	"keywords": [
+		"sass",
+		"scss"
+	],
+	"author": "Jack <jack.fu@cxagroup.com>",
+	"license": "BSD",
+	"dependencies": {
+		"argparse": "^1.0.9"
+	},
+	"scss":{
+		"midori": {
+			"path": "."
+		},
+		"sass-css3-mixins": {
+			"path": "lib/sass-css3-mixins"
+		},
+		"sass-mq": {
+			"path": "lib/sass-mq"
+		},
+		"tests": {
+			"path": "tests"
+		},
+		"casper": {
+			"path": "/Users/jack/work/cxagroup/china-cxaone-fe/src/casper"
+		}
+	}
+}

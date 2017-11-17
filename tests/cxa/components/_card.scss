@@ -1,0 +1,161 @@
+/**
+ * The card implementation for CXA
+ *
+ * @author Jack <jack.fu@cxagroup.com>
+ * @version 0.0.1
+ * @date Wed Nov 15 17:35:45 2017
+ *
+ * @import cxa/core, cxa/mixins
+ */
+
+$component: #{$css-prefix}card;
+.card {
+  @include card-shadow();
+  display: flex;
+  flex-direction: column;
+  border-radius: $global-radius;
+  padding: $measure / 2;
+  margin-bottom: $spacing-unit;
+  overflow: hidden;
+  background-color: colour(neutral, pure-white);
+
+  @media screen and (min-width: $break-galao) {
+    padding: $measure;
+  }
+
+  // Fix for nested cards to ensure they match their parent's height.
+  &.grid__item {
+    > * {
+      margin-left: 0;
+      margin-right: 0;
+      margin-bottom: 0;
+    }
+  }
+
+  > * + * {
+    margin-top: $measure;
+  }
+
+  > * > :first-child {
+    margin-top: 0;
+  }
+
+  > * > :last-child {
+    margin-bottom: 0;
+  }
+
+  &--alert {
+    border: 1px solid colour(highlight, light-red);
+    padding: $measure - 1;
+
+    strong {
+      color: colour(highlight, dark-red);
+    }
+  }
+
+  &--tools {
+    flex-direction: row;
+    padding: $measure / 2 $measure;
+
+    > * {
+      margin: 0;
+    }
+
+    > section + section {
+      flex-grow: 0;
+    }
+  }
+
+  &__section {
+    &--constrained {
+      .apl-scroll-table {
+        max-height: 21em;      
+      }
+    }
+
+    &--empty {
+      padding: $spacing-unit;
+      color: rgba(black, 0.34);
+      text-transform: uppercase;
+      text-align: center;
+      font-weight: bold;
+    }
+  }
+
+  img {
+    max-width: 100%;
+    height: auto;
+  }
+
+  > header {
+    position: relative;
+    padding-bottom: $measure / 2;
+
+    &::after {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      content: "";
+      height: 1px;
+      width: $measure * 3.5;
+      background-color: colour(cxa, amaranth);
+    }
+
+    h2 {
+      display: inline-block;
+      margin: 0;
+      font-size: 20px;
+      line-height: 1;
+
+      @media screen and (min-width: $break-cafe-creme) {
+        font-size: 24px;
+      }
+    }
+
+    p {
+      float: right;
+      margin-left: 1em;
+      font-size: 14px;
+
+      @media screen and (min-width: $break-cafe-creme) {
+        font-size: 16px;
+      }
+    }
+  }
+
+  > section {
+    flex-grow: 1;
+    // Ahh IE11... flex-grow can *sometimes* make a container grow out of control.
+    // Setting a min-height makes it work.
+    // https://github.com/philipwalton/flexbugs/issues/75
+    min-height: 1px;
+  }
+
+  > footer .button {
+    margin-bottom: 0.75em;
+    margin-left: 0;
+    margin-right: 0.75em;
+  }
+}
+
+// No-flex
+// Support for non-flexbox browsers. Remove this once IE10 support is no longer required.
+// Fall back to float
+//.flexbox {
+.no-flexbox {
+  .card {
+    display: block;
+
+    &--tools {
+      @include clearfix();
+
+      > section {
+        float: left;
+
+        &:last-child {
+          float: right;
+        }
+      }
+    }
+  }
+}

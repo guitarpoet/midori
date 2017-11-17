@@ -1,0 +1,81 @@
+/**
+ * The table support for CXA
+ *
+ * @author Jack <jack.fu@cxagroup.com>
+ * @version 0.0.1
+ * @data Wed Nov 15 16:16:41 2017
+ * @import cxa/core, cxa/colors, cxa/typography, midori/components/table
+ */
+
+$component: #{$css-prefix}data-table;
+
+/**
+ * The mostly used datatable
+ */
+.#{$component} {
+	font-size: 14px;
+	font-family: $proxima-nova;
+	width: 100%;
+	box-shadow: $standard-shadow;
+
+	&__tools {
+		white-space: nowrap;
+	}
+
+	th,
+	td {
+		@include mq($from: desktop) {
+			padding: ($measure / 4) ($measure / 2);
+		}
+		vertical-align: top;
+	}
+
+	thead th {
+		text-align: left;
+		background-color: colour(cxa, deep-disco);
+		color: colour(neutral, pure-white);
+	}
+
+	// Make it responsible by using midori
+    @include midori-table-responsive(desktop, data-th, "") {
+		background-color: colour(cxa, deep-disco);
+		color: colour(neutral, pure-white);
+		padding: ($measure / 8) ($measure / 8);
+    };
+
+	@include midori-table-row(even) {
+		background-color: colour(neutral, pure-white);
+
+		.card & {
+			background-color: colour(neutral, ultra-light-grey);
+		}
+	}
+
+	@include midori-table-row(odd) {
+		background-color: colour(neutral, lighter-grey);
+	}
+
+	@include midori-table-responsive-row(tablet, even) {
+		background-color: colour(neutral, pure-white) !important;
+	}
+
+	@include midori-table-responsive-row(tablet, odd) {
+		background-color: colour(neutral, lighter-grey) !important;
+	}
+
+	& > tbody {
+		tr > td > ul {
+			margin: 0;
+			padding-left: 0;
+			list-style-type: none;
+		}
+	}
+
+	h4, h5 {
+		margin-top: 0;
+	}
+}
+
+table {
+  border-collapse: collapse;
+}

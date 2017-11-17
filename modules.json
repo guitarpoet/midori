@@ -1,0 +1,17 @@
+{
+	"midori": {
+		"path": "."
+	},
+	"sass-css3-mixins": {
+		"path": "lib/sass-css3-mixins"
+	},
+	"sass-mq": {
+		"path": "lib/sass-mq"
+	},
+	"tests": {
+		"path": "tests"
+	},
+	"casper": {
+		"path": "/Users/jack/work/cxagroup/china-cxaone-fe/src/casper"
+	}
+}

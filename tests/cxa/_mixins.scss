@@ -1,0 +1,33 @@
+/**
+ * The mixins for CXA
+ *
+ * @author Jack <jack.fu@cxagroup.com>
+ * @version 0.0.1
+ * @date Wed Nov 15 17:34:07 2017
+ */
+
+@mixin card-shadow() {
+  box-shadow: $card-shadow;
+}
+
+@mixin spread-content() {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+@mixin clearfix() {
+  &::after {
+    content: "";
+    display: table;
+    clear: both;
+  }
+}
+@mixin inuit-clearfix() {
+  &:after {
+    content: "" !important;
+    display: block !important;
+    clear: both !important;
+  }
+
+}

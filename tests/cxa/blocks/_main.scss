@@ -1,0 +1,431 @@
+/**
+ * The main block for CXA
+ *
+ * @author Jack <jack.fu@cxagroup.com>
+ * @version 0.0.1
+ * @date Wed Nov 15 17:44:18 2017
+ *
+ * @import cxa/core
+ */
+
+a:not([class]) {
+  color: colour(cxa, salem);
+  font-family: $proxima-nova-semibold;
+
+  &:hover,
+  &:active,
+  &:focus {
+    text-decoration: underline;
+  }
+
+  svg {
+    fill: colour(cxa, light-sushi);
+  }
+}
+
+.cxa-c-action {
+  font-family: $proxima-nova-semibold;
+  color: colour(cxa, dark-amaranth);
+  white-space: nowrap;
+
+  &__secondary {
+    font-family: $proxima-nova-light;
+  }
+
+  &:hover,
+  &:active,
+  &:focus {
+    text-decoration: underline;
+  }
+}
+
+// Cards
+// .cxa-c-card
+
+.cxa-c-card {
+  &--primary {
+//    box-shadow: 0 1px 2px 0 rgba(colour(neutral, pure-black) 0.2);
+  }
+
+  &__section {
+    padding: $measure / 2;
+  }
+}
+
+// Forms
+// .cxa-c-form
+
+.cxa-c-form {
+  legend {
+    padding: 0 0 1px;
+  }
+
+  fieldset {
+    margin: 0;
+    border: 0;
+    padding: 0;
+  }
+
+  h3,
+  h4 {
+    margin-top: 0;
+  }
+
+  label {
+    display: block;
+
+    * {
+      vertical-align: sub;
+    }
+  }
+}
+
+fieldset {
+  margin: 0;
+  padding: 0;
+  border: 0;
+}
+
+.cxa-c-form__hint {
+  display: block;
+  color: colour(cxa, disco);
+}
+
+input[type="text"],
+input[type="email"],
+input[type="password"],
+textarea {
+  border: 1px solid colour(neutral, dark-grey);
+  border-radius: 2px;
+  padding: 4px;
+  line-height: 1.25;
+  font-size: 1em;
+
+  &:disabled {
+    background-color: colour(neutral, lighter-grey);
+  }
+
+  &:focus {
+    box-shadow: 0 0 1px 2px colour(highlight, amber);
+    outline: none;
+  }
+}
+
+input[type="radio"],
+input[type="checkbox"] {
+  width: 2em;
+  height: 2em;
+}
+
+select {
+  border: 1px solid colour(cxa, salem);
+  border-radius: 2px;
+  padding: 4px;
+  line-height: 1.25;
+  background-color: colour(neutral, pure-white);
+
+  &:disabled {
+    background-color: colour(neutral, lighter-grey);
+  }
+
+  &:focus {
+    box-shadow: 0 -1px 4px colour(cxa, salem), 0 1px 4px colour(cxa, salem);
+    outline: none;
+  }
+}
+
+// Derived from Lea Verou
+// http://lea.verou.me/2011/03/custom-select-drop-downs-with-css3/
+.cxa-c-form__select-box {
+  display: inline-block;
+  position: relative;
+
+  select {
+    display: inline-block;
+    padding: 4px 21px 4px 4px;
+    font: inherit;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+
+    // IE selector for drop button
+    // https://msdn.microsoft.com/en-us/library/windows/apps/hh465742.aspx
+    &::-ms-expand {
+      display: none;
+    }
+
+    &:disabled {
+      border-color: colour(neutral, darkish-grey);
+    }
+
+    // IE9 doesn't get on well with custom select controls so we won't bother
+    .ie9 & {
+      padding-right: 4px;
+    }
+  }
+
+  &::after {
+    content: "\25bc";
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    font-size: 60%;
+    line-height: 30px;
+    border: 0;
+    border-left: 0;
+    border-top-right-radius: 2px;
+    border-bottom-right-radius: 2px;
+    padding-right: 7px;
+    color: colour(cxa, salem);
+    pointer-events: none;
+
+    // IE9 doesn't get on well with custom select controls so we won't bother
+    .ie9 & {
+      display: none;
+    }
+
+    .cxa-c-form__field-box--error & {
+      border-color: colour(highlight, red);
+      color: colour(highlight, red);
+    }
+
+    .cxa-c-form__field-box--disabled & {
+      border-color: colour(neutral, darkish-grey);
+      color: colour(neutral, darkish-grey);
+    }
+  }
+}
+
+.cxa-c-form__field-box {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  margin-bottom: 1em;
+
+  &--error {
+    input,
+    input:focus,
+    select,
+    select:focus,
+    textarea,
+    textarea:focus,
+    .c-form__select-box::after {
+      border-color: colour(highlight, red);
+    }
+  }
+}
+
+.cxa-c-form__sub-field-box {
+  &[aria-hidden="true"] {
+    display: none;
+  }
+}
+
+.cxa-c-form__label--error {
+  color: colour(highlight, red);
+}
+
+.cxa-c-form__block-label {
+  display: block;
+  padding: 0.25em 0;
+  cursor: pointer;
+
+  &:hover {
+    border-color: colour(neutral, darkish-grey);
+  }
+
+  &--focussed {
+    box-shadow: 0 0 1px 2px colour(highlight, amber);
+    outline: none;
+    border-color: colour(neutral, light-grey);
+
+    *:focus {
+      outline: none;
+    }
+  }
+
+  &--radio {
+    position: relative;
+    padding-left: 2.25em;
+    text-indent: -2.25em;
+
+    &:first-line {
+      text-index: 0;
+    }
+
+    input {
+      top: 0.75em;
+      position: relative;
+    }
+  }
+
+  &--checked {
+    border-color: colour(neutral, darkish-grey);
+    background-color: colour(neutral, ultra-light-grey);
+  }
+
+  &--error {
+    border-color: colour(highlight, red);
+
+    &:hover {
+      border-color: colour(highlight, red);
+    }
+  }
+
+  &--disabled {
+    cursor: default;
+    border-color: colour(neutral, light-grey);
+    color: colour(neutral, darkish-grey);
+
+    &:hover {
+      border-color: colour(neutral, light-grey);
+    }
+  }
+}
+
+.cxa-c-form__field-box--inline {
+  .cxa-c-form__block-label {
+    display: inline-block;
+    margin-right: 0.5em;
+  }
+}
+
+
+// Media
+//
+// Images and videos
+
+.cxa-c-media {
+  position: relative;
+  width: 100%;
+  max-width: 38rem;
+  margin: 0;
+  padding-bottom: 62.5%;
+  height: 0;
+
+  iframe { // video embed
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    border: 0;
+  }
+}
+
+
+// Tabs
+
+$tab-colour-selected: #000;
+$tab-background-colour-selected: #fff;
+
+.cxa-c-tab__tab-list {
+  list-style: none;
+  padding-left: 0;
+  margin-bottom: 0;
+}
+
+.cxa-c-tab__tab {
+  display: inline-block;
+
+  + .cxa-c-tab__tab {
+    margin-left: 0.5em;
+  }
+
+  a {
+    display: inline-block;
+    padding: 0.25em 0.5em;
+    border: 1px solid colour(neutral, mid-grey);
+    border-radius: 2px 2px 0 0;
+    border-bottom: 0;
+    color: colour(cxa, deep-salem);
+    background: colour(neutral, ultra-light-grey);
+    text-decoration: none;
+    touch-action: manipulation;
+    transition: border ease-in-out 175ms, background ease-in-out 175ms;
+
+    &:hover,
+    &:focus {
+      background: colour(cxa, salem);
+      border-color: colour(cxa, salem);
+      color: colour(neutral, pure-white);
+    }
+  }
+
+  a:active,
+  &[aria-selected="true"] a {
+    background: colour(neutral, pure-white);
+    border-color: colour(neutral, darkish-grey);
+    color: colour(neutral, dark-grey);
+  }
+}
+
+.cxa-c-tab__tab-panel {
+  border-top: 1px solid colour(neutral, darkish-grey);
+
+  &[aria-hidden="true"] {
+    display: none;
+  }
+}
+
+html {
+  box-sizing: border-box;
+}
+
+* {
+  &,
+  &::before,
+  &::after {
+    box-sizing: inherit;
+  }
+}
+
+.cxa-wrapper {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+
+/* stylelint-disable */
+@if (type-of($inuit-wrapper-width) != number) {
+  @error "`#{$inuit-wrapper-width}` needs to be a number."
+}
+/* stylelint-enable */
+
+.o-wrapper {
+  @include inuit-clearfix();
+  padding-right: $inuit-global-spacing-unit;
+  padding-left:  $inuit-global-spacing-unit;
+  margin-right: auto;
+  margin-left:  auto;
+  max-width: $inuit-wrapper-width;
+}
+
+
+
+
+
+/* Size variants.
+   ========================================================================== */
+
+.o-wrapper--tiny {
+  padding-right: $inuit-global-spacing-unit-tiny;
+  padding-left:  $inuit-global-spacing-unit-tiny;
+}
+
+.o-wrapper--small {
+  padding-right: $inuit-global-spacing-unit-small;
+  padding-left:  $inuit-global-spacing-unit-small;
+}
+
+.o-wrapper--large {
+  padding-right: $inuit-global-spacing-unit-large;
+  padding-left:  $inuit-global-spacing-unit-large;
+}
+
+.o-wrapper--huge {
+  padding-right: $inuit-global-spacing-unit-huge;
+  padding-left:  $inuit-global-spacing-unit-huge;
+}
