@@ -1,0 +1,59 @@
+/**
+ * This is the powerful auto prefixer, you can use most of the css mixins using this auto prefixer
+ *
+ * @author Jack <jack.fu@cxagroup.com>
+ * @version 0.0.1
+ * @date Mon Nov 20 14:20:23 2017
+ *
+ * @import midori/prefixer/background
+ * @import midori/prefixer/flex
+ * @import midori/prefixer/form
+ */
+
+@mixin midori-autoprefixer($name, $value: null) {
+	@if $name == background-clip {
+		@include midori-background-clip($value);
+	} 
+	@if $name == background-size {
+		@include midori-background-size($value);
+	} 
+	@if $name == flexbox {
+		@include midori-flexbox;
+	} 
+	@if $name == inline-flexbox {
+		@include midori-inline-flexbox;
+	} 
+	@if $name == flex-direction {
+		@include midori-flex-direction($value);
+	}
+	@if $name == flex-wrap {
+		@include midori-flex-wrap($value);
+	}
+	@if $name == flex-flow {
+		@include midori-flex-flow($value);
+	}
+	@if $name == order {
+		@include midori-order($value);
+	}
+	@if $name == flex-grow {
+		@include midori-flex-grow($value);
+	}
+	@if $name == flex-shrink {
+		@include midori-flex-shrink($value);
+	}
+	@if $name == flex-basis {
+		@include midori-flex-basis($value);
+	}
+	@if $name == justify-content {
+		@include midori-justify-content($value);
+	}
+	@if $name == align-items {
+		@include midori-align-items($value);
+	}
+	@if $name == align-self {
+		@include midori-align-self($value);
+	}
+	@if $name == align-content {
+		@include midori-align-self($value);
+	}
+}

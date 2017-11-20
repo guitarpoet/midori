@@ -6,6 +6,11 @@
  * @date Wed Nov 15 15:03:40 2017
  */
 
+/**
+ * Enable the auto prefixer by default
+ */
+$midori-enable-autoprefixer: true !default;
+
 @function midori-get-keys($map) {
     $keys: ();
 
@@ -30,20 +35,68 @@
     @return $color;
 }
 
-$imported-once-files: () !default;
+@function midori-is-direction($value) {
+  $is-keyword: index((to top, to top right, to right top, to right, to bottom right, to right bottom, to bottom, to bottom left, to left bottom, to left, to left top, to top left), $value);
+  $is-angle: type-of($value) == 'number' and index('deg' 'grad' 'turn' 'rad', unit($value));
 
-/**
- * Check if the module is already loaded yet
- */
-@function not-imported($name) {
-    $imported-once-files: $imported-once-files !global;
-    $module_index: index($imported-once-files, $name);
+  @return $is-keyword or $is-angle;
+}
 
-    @if $module_index == null or $module_index == false {
-        $imported-once-files: append($imported-once-files, $name);
 
-        @return true;
-    }
+/// Convert a direction to legacy syntax
+/// @param {Keyword | Angle} $value - Value to convert
+/// @require {function} is-direction
+/// @require {function} convert-angle
+/// @throw Cannot convert `#{$value}` to legacy syntax because it doesn't seem to be a direction.;
+/// @see https://www.sitepoint.com/building-linear-gradient-mixin-sass/
+@function midori-legacy-direction($value) {
+	@if "#{$value}" == "to top" {
+		@return bottom;
+	}
 
-    @return false;
+	@if $value == "to top right" {
+		@return bottom left;
+	}
+
+	@if $value == "to right top" {
+		@return left bottom;
+	}
+
+	@if $value == "to right" {
+		@return left bottom;
+	}
+
+	@if $value == "to bottom right" {
+		@return top left;
+	}
+
+	@if $value == "to right bottom" {
+		@return left top;
+	}
+
+	@if $value == "to bottom" {
+		@return top;
+	}
+
+	@if $value == "to bottom left" {
+		@return top right;
+	}
+
+	@if $value == "to left bottom" {
+		@return right top;
+	}
+
+	@if $value == "to left" {
+		@return right;
+	}
+
+	@if $value == "to left top" {
+		@return right bottom;
+	}
+
+	@if $value == "to top left" {
+		@return bottom right;
+	}
+
+	@return 90deg - $value;
 }

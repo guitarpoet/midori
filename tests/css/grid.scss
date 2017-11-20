@@ -1,0 +1,41 @@
+@import "./grid_dep";
+
+$break-mobile: 480px;
+$break-mobile-wide: 600px;
+$break-tablet: 720px;
+$break-desktop: 900px;
+$break-desktop-normal: 1080px;
+$break-desktop-wide: 1200px;
+$break-desktop-extra-wide: 1440px;
+
+$break-mobile-width: 360px;
+$break-mobile-wide-width: 480px;
+$break-tablet-width: 600px;
+$break-desktop-width: 780px;
+$break-desktop-normal-width: 960px;
+$break-desktop-wide-width: 1080px;
+$break-desktop-extra-wide-width: 1320px;
+
+// The break points for media query
+$break-points: (mobile: $break-mobile, mobile-wide: $break-mobile-wide, tablet: $break-tablet, desktop: $break-desktop, desktop-normal: $break-desktop-normal, wide: $break-desktop-wide, extra-wide: $break-desktop-extra-wide);
+
+$break-point-widths: (mobile: $break-mobile-width, mobile-wide: $break-mobile-wide-width, tablet: $break-tablet-width, desktop: $break-desktop-width, desktop-normal: $break-desktop-normal-width, wide: $break-desktop-wide-width, extra-wide: $break-desktop-extra-wide-width);
+
+.container {
+	@include midori-container($break-points, $break-point-widths) {
+		@extend .midori-container-defaults;
+	}
+}
+
+.row {
+	@include midori-grid-row;
+}
+
+$bootstrap-break-points: (
+	xs: $break-mobile,
+	sm: $break-mobile-wide,
+	md: $break-tablet,
+	lg: $break-desktop,
+);
+
+@include midori-flex-grid-generator($bootstrap-break-points, col, $default-number-column-names);

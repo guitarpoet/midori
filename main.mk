@@ -1,3 +1,13 @@
+SCSS_MIDORI_FILES := $(call rwildcard, tests, *.midori.scss)
+SCSS_MIDORI_DEP_FILES := $(SCSS_MIDORI_FILES:.midori.scss=_dep.scss)
+
+t: clean tests/css/grid.css $(SCSS_MIDORI_DEP_FILES)
+	$(SILENT) ./chrome.sh reload
+.PHONY: t
+
+tests/css/grid.css: $(SCSS_SRC)
+	$(SILENT) scss $(SCSS_MODULES) tests/css/grid.scss tests/css/grid.css
+
 test: clean $(TEST_SCSS_DIST)
 	$(SILENT) ./chrome.sh reload
 .PHONY: test
@@ -10,8 +20,9 @@ test-js:
 .PHONY: test-js
 
 clean:
+	$(SILENT) $(RM) .sass-cache/
+	$(SILENT) $(RM) $(SCSS_MIDORI_DEP_FILES)
 	$(SILENT) $(RM) $(TEST_SCSS_DIST)
-	$(SILENT) $(RM) tests/css/_test_dep.scss
 .PHONY: clean
 
 $(TEST_SCSS_DIST): $(SCSS_SRC) tests/css/_test_dep.scss

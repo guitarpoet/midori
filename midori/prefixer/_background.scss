@@ -1,0 +1,49 @@
+/**
+ * The prefixer mixins for background
+ * @author Jack <jack.fu@cxagroup.com>
+ * @version 0.0.1
+ * @date Mon Nov 20 14:29:50 2017
+ * @import midori/core
+ */
+
+@mixin midori-background-clip($value) {
+	@if $midori-enable-autoprefixer {
+		-webkit-background-clip: $value;
+	}
+
+	background-clip: $value;
+}
+
+@mixin midori-background-size($value) {
+	@if $midori-enable-autoprefixer {
+		-webkit-background-size: $value;
+	}
+
+	background-size: $value;
+}
+
+/*
+ * Mixin printing a linear-gradient
+ * as well as a plain color fallback
+ * and the `-webkit-` prefixed declaration
+ * @access public
+ * @param {Keyword | Angle} $direction - Linear gradient direction
+ * @param {Arglist} $color-stops - List of color-stops composing the gradient
+ *
+ * @see https://www.sitepoint.com/building-linear-gradient-mixin-sass/
+ */
+@mixin midori-linear-gradient($direction, $color-stops...) {
+	@if $midori-enable-autoprefixer {
+		// Direction has been omitted and happens to be a color-stop
+		@if midori-is-direction($direction) == false {
+			$color-stops: $direction, $color-stops;
+			$direction: 180deg;
+		}
+
+		background: nth(nth($color-stops, 1), 1);
+		background: -webkit-linear-gradient(midori-legacy-direction($direction), $color-stops);
+		background: -o-linear-gradient(midori-legacy-direction($direction), $color-stops);
+	}
+
+	background: linear-gradient($direction, $color-stops);
+}

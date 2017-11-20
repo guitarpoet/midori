@@ -20,6 +20,8 @@ TEST_SCSS_DIST := tests/css/test.css
 
 MAKE_SECTION_HEADER(Patterns)
 
+WEB_MAKE_PATTERNS
+
 MARKDOWN_MAKE_PATTERNS(macros/markdown.m4)
 
 MAKE_SECTION_HEADER(Tasks)
