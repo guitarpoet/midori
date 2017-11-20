@@ -124,69 +124,74 @@ $default-number-column-names: 1 2 3 4 5 6 7 8 9 10 11 12;
 		@include midori-column-base;
 	}
 
-	$i: 0;
+	@if length(map-keys($break-points)) > 0 {
+		$keys: map-keys($break-points);
+		$break-points-count: length($keys);
 
-	@each $name in $names {
-		@if length(map-keys($break-points)) > 0 {
+		@for $i from -1 * $column-count through -1 {
+			$name: nth($names, abs($i));
 			$from: null;
-			$keys: map-keys($break-points);
-			$break-points-count: length($keys);
 
 			@for $count from 1 through $break-points-count {
 				$key: nth($keys, $count);
 
-				@if $count == 1 {
+				@if abs($i) == 1 {
 					// This is the first one
+					@for $count from 1 through $column-count {
+						.off-#{$key}-#{$count} {
+							margin-left: percentage($count / $column-count);
+						}
+					}
+
+					.off-#{$key}-reset {
+						margin-left: 0;
+					}
+				}
+
+				@if $count == 1 {
 					.#{$prefix}-#{$key}-#{$name} {
 						@include mq($until: map-get($break-points, $key)) {
 							@include midori-column-base;
 							@include midori-column-settings;
-							@include midori-flex-width(($i + 1) / $column-count);
+							@include midori-flex-width(abs($i) / $column-count);
 						}
+
+
 						@include mq($from: map-get($break-points, $key)) {
 							@include midori-column-base;
 							@include midori-column-settings;
-							@include midori-flex-width(($i + 1) / $column-count);
+							@include midori-flex-width(abs($i) / $column-count);
 						}
 					}
 				}
 				@else {
-					@if $count == $break-points-count - 1 {
-						// This is the last
-						.#{$prefix}-#{$key}-#{$name} {
+					.#{$prefix}-#{$key}-#{$name} {
+						@include mq($from: $from, $until: map-get($break-points, $key)) {
+							@include midori-column-base;
+							@include midori-column-settings;
+							@include midori-flex-width(abs($i) / $column-count);
+						}
+
+						@if $count == $break-points-count {
+							// This is the last
 							@include mq($from: map-get($break-points, $key)) {
 								@include midori-column-base;
 								@include midori-column-settings;
-								@include midori-flex-width(($i + 1) / $column-count);
+								@include midori-flex-width(abs($i) / $column-count);
 							}
 						}
 					}
-					@else {
-						.#{$prefix}-#{$key}-#{$name} {
-							@include mq($from: $from, $until: map-get($break-points, $key)) {
-								@include midori-column-base;
-								@include midori-column-settings;
-								@include midori-flex-width(($i + 1) / $column-count);
-							}
-						}
-					}
-				}
-
-				@for $count from 1 through $column-count {
-					.off-#{$key}-#{$count} {
-						margin-left: percentage($count / $column-count);
-					}
-				}
-
-				.off-#{$key}-reset {
-					margin-left: 0;
 				}
 
 				// Update from
 				$from: map-get($break-points, $key);
 			}
 		}
-		@else {
+	}
+	@else {
+		$i: 0;
+
+		@each $name in $names {
 			.#{$prefix}-#{$name} {
 				@include mq($from: map-get($brak-points, $key)) {
 					@include midori-column-base;
@@ -206,7 +211,5 @@ $default-number-column-names: 1 2 3 4 5 6 7 8 9 10 11 12;
 				margin-left: 0;
 			}
 		}
-
-		$i: $i + 1;
 	}
 }

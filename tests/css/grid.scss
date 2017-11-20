@@ -33,9 +33,9 @@ $break-point-widths: (mobile: $break-mobile-width, mobile-wide: $break-mobile-wi
 
 $bootstrap-break-points: (
 	xs: $break-mobile,
-	sm: $break-mobile-wide,
-	md: $break-tablet,
-	lg: $break-desktop,
+	sm: $break-tablet,
+	md: $break-desktop,
+	lg: $break-desktop-normal,
 );
 
 @include midori-flex-grid-generator($bootstrap-break-points, col, $default-number-column-names);
