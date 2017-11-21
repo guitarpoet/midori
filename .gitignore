@@ -1,3 +1,6 @@
 /node_modules
 /.sass-cache
 /Makefile
+tests/css/*.css
+tests/css/*.css.map
+tests/css/*_dep.scss
