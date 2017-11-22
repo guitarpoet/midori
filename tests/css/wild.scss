@@ -1,0 +1,9 @@
+/**
+ * This is the wild scss
+ */
+@mixin wild {
+	div.wild {
+		// We need simple to be included too
+		@include simple;
+	}
+}

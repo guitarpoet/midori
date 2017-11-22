@@ -182,6 +182,18 @@ const calculateTree = (name, path, dependencies, includes, tree) => {
 		tree = new DependencyTree();
 	}
 
+	if(name.indexOf("(") != -1) {
+		// This is the pattern of xxx(xxx xxx xxx) force dependency mode
+		let data = name.replace(")", "").split("(");
+		// Recalculate the name
+		name = data[0];
+
+		// Add the force dependency to the dependencies
+		data[1].split(" ").map(item => {
+			dependencies.push({ name: item.trim(), path: resolveImportFiles(item.trim().split("/"), includes) });
+		});
+	}
+
 	if(dependencies) {
 		// Add the dependencies first
 		for(let d of dependencies) {
@@ -220,7 +232,11 @@ const getDependencyLayers = (args) => {
 
 const getDependencies = (file, includes) => {
 	return getImportsSync(file).map(i => {
-		return { name: i, path: resolveImportFiles(i.split("/"), includes) }
+		let filePath = i;
+		if(filePath.indexOf("(") != -1) {
+			filePath = filePath.split("(")[0];
+		}
+		return { name: i, path: resolveImportFiles(filePath.split("/"), includes) }
 	}).filter(f => f.path);
 }
 
