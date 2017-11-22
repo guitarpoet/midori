@@ -1,0 +1,10 @@
+/**
+ * This is the base scss
+ *
+ * @import css/variables
+ * @import midori/components/form
+ */
+
+@function five-times($value: 10px) {
+	@return 5 * $value;
+}

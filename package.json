@@ -2,26 +2,27 @@
 	"name": "midori",
 	"version": "1.0.0",
 	"description": "The swiss knife for making sass better to use.",
-	"main": "index.js",
 	"directories": {
 		"test": "tests"
-	},
-	"scripts": {
-		"test": "echo fake test"
 	},
 	"keywords": [
 		"sass",
 		"scss"
 	],
+	"main": "src/loader.js",
 	"author": "Jack <jack.fu@cxagroup.com>",
 	"license": "BSD",
+	"devDependencies": {
+		"css-loader": "^0.28.7",
+		"style-loader": "^0.19.0",
+		"webpack": "^3.8.1",
+		"sass-loader": "^6.0.6",
+		"node-sass": "^4.7.2"
+	},
 	"dependencies": {
 		"argparse": "^1.0.9"
 	},
-	"scss":{
-		"midori": {
-			"path": "."
-		},
+	"scss": {
 		"lib": {
 			"path": "lib"
 		},

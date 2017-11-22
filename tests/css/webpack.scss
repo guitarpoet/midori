@@ -1,0 +1,10 @@
+/**
+ * This is the test file for testing using webpack
+ * 
+ * @import css/base, css/simple
+ * @import midori/grid
+ */
+
+body {
+	@include simple;
+}

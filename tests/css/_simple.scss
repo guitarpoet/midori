@@ -1,0 +1,11 @@
+/**
+ * This is the simple scss
+ *
+ * @import css/base
+ * @import midori/components/table
+ */
+
+@mixin simple {
+	width: $default-width;
+	height: $default-height;
+}

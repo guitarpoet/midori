@@ -1,6 +1,19 @@
+/**
+ * The dependency tree algorithms for the scss processing.
+ *
+ * @author Jack <jack.fu@cxagroup.com>
+ * @version 0.0.1
+ * @date Wed Nov 22 10:43:27 2017
+ */
+
 class DependencyTreeNode {
-	constructor(name, dependencies = [], parents = []) {
+	/**
+	 * Construct the Dependency Tree Node, will store the absolute path of this node too.
+	 * Only the root node don't have path, the path of ROOT node is ROOT.
+	 */
+	constructor(name, path = "ROOT", dependencies = [], parents = []) {
 		this.name = name;
+		this.path = path;
 		this.dependencies = dependencies;
 		this._children = [];
 		if(parents) {
@@ -12,6 +25,9 @@ class DependencyTreeNode {
 		}
 	}
 
+	/**
+	 * The level of this node, will calculate from its parent node
+	 */
     level() {
         let level = 0;
         if(this.parents && this.parents.length) {
@@ -25,19 +41,30 @@ class DependencyTreeNode {
         return level;
     }
 
+	/**
+	 * The children of this node
+	 */
 	getChildren() {
 		return this._children;
 	}
 
-	exists(name) {
+	/**
+	 * Check if this node is exists in the children, since the name can be a little different
+	 * in scss require(because scss require supports relative import, though midori import don't),
+	 * so will use the path to check instead of the name
+	 *
+	 * @param path
+	 * 		The absolute path of the scss file, must be the absolute file path, if not, will treat it as different node
+	 */
+	exists(path) {
 		// Test if it is in the child fisrt
-		let cc = this.childExists(name);
+		let cc = this.childExists(path);
 		if(cc) {
 			return cc;
 		}
 
 		for(let c of this.getChildren()) {
-			cc = c.exists(name);
+			cc = c.exists(path);
 			if(cc) {
 				// It is exists in the child
 				return cc;
@@ -46,10 +73,13 @@ class DependencyTreeNode {
 		return false;
 	}
 
-	childExists(name) {
-		if(name) {
+	/**
+	 * Test if any child have this path
+	 */
+	childExists(path) {
+		if(path) {
 			for(let c of this.getChildren()) {
-				if(c.name == name) {
+				if(c.path == path) {
 					return c;
 				}
 			}
@@ -57,6 +87,9 @@ class DependencyTreeNode {
 		return false;
 	}
 
+	/**
+	 * Add child into the children
+	 */
 	addChild(child) {
 		if(child) {
 			if(!this.childExists(child)) {
@@ -67,13 +100,16 @@ class DependencyTreeNode {
 		return false;
 	}
 
+	/**
+	 * Output the node
+	 */
     show(output) {
         let o = "";
 
         for(let i = 0; i <= this.level(); i++) {
             o += " ";
         }
-        output(`${o} ${this.name} ${this.level()}`);
+        output(`${o} ${this.name} ${this.path} ${this.level()}`);
 
         for(let c of this.getChildren()) {
             c.show(output);
@@ -88,7 +124,7 @@ class DependencyTreeNode {
         let exists = false;
 
         for(let e of map[level]) {
-            if(e == this.name) {
+            if(e == this.path) {
                 exists = true;
                 break;
             }
@@ -96,7 +132,7 @@ class DependencyTreeNode {
 
         if(!exists) {
             // Add this to current layer
-            map[level].push(this.name);
+            map[level].push(this.path);
         }
 
         for(let c of this.getChildren()) {
@@ -112,13 +148,19 @@ class DependencyTree {
 		this.root = new DependencyTreeNode("ROOT");
 	}
 
-	resolve(name) {
-		return this.root.exists(name);
+	/**
+	 * Resolve the scss node using the absolute path of the scss
+	 */
+	resolve(path) {
+		return this.root.exists(path);
 	}
 
-	addNode(name, dependencies) {
+	/**
+	 * Add the scss node into this tree
+	 */
+	addNode(name, path, dependencies) {
 		// Let's find if this node is already added
-		let node = this.resolve(name);
+		let node = this.resolve(path);
 		if(node) {
 			// We already have it, skip it
 			return false;
@@ -127,7 +169,7 @@ class DependencyTree {
 		let parents = [];
 		if(dependencies) {
             dependencies.map(f => {
-                let n = this.resolve(f.name);
+                let n = this.resolve(f.path);
                 if(n) {
                     parents.push(n);
                 }
@@ -139,7 +181,7 @@ class DependencyTree {
             parents = [this.root];
         }
 
-		new DependencyTreeNode(name, dependencies, parents);
+		new DependencyTreeNode(name, path, dependencies, parents);
 	}
 
     layers() {
