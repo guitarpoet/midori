@@ -6,7 +6,7 @@
  * @date Tue Nov 21 16:19:43 2017
  */
 
-let { getIncludePaths, calculateTree } = require("./functions");
+let { getIncludePaths, getIncludePathsSync, calculateTree } = require("./functions");
 
 let deps = [];
 let processed = false;
@@ -28,7 +28,6 @@ const loader = function(content) {
                     }
                 }
             }
-            console.info(data);
             callback(null, data.join("\n"));
         }).catch(callback);
         processed = true;
@@ -49,6 +48,8 @@ loader.pitch = function(request) {
         deps.push({name, path});
     }
 }
+
+loader.getIncludePaths = getIncludePathsSync;
 
 module.exports = loader;
 module.exports.default = loader;

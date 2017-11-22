@@ -1,4 +1,7 @@
 const path = require("path");
+let { getIncludePaths } = require("./src/loader");
+
+let includePaths = getIncludePaths();
 
 module.exports = {
     entry: path.resolve(__dirname, "tests/webpack-test.js"),
@@ -13,6 +16,7 @@ module.exports = {
                     {
                         loader: "sass-loader?sourceMap",
                         options: {
+                            includePaths
                         }
                     },
                     "./src/loader"

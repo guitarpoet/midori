@@ -44,6 +44,40 @@ const getFileContentsSync = (path) => {
 	return false;
 }
 
+const getIncludePathsSync = (args = { package_config: "package.json" }) => {
+	let module = args.package_config;
+	let data = getFileContentsSync(module);
+	// Added current folder and the node modules folder by default
+	let includePaths = ["node_modules", "."];
+	// Need to check for midori in the node_modules too
+	includePaths.push("node_modules/midori");
+	if(data) {
+		let include = args.include || [];
+
+		let config = JSON.parse(data);
+		if(include) {
+			// Let's add the include paths first
+			for(let i of include) {
+				includePaths.push(i);
+			}
+		}
+
+		// Update the config to the scss part of the package.json
+		config = config.scss;
+
+		if(config) {
+			// Then, let's add module's paths
+			for(let p in config) {
+				let m = config[p];
+				if(m && m.path) {
+					includePaths.push(m.path);
+				}
+			}
+		}
+	}
+	return includePaths;
+}
+
 const getIncludePaths = (args = { package_config: "package.json" }) => {
 	return new Promise((resolve, reject) => {
 		let module = args.package_config;
@@ -190,4 +224,4 @@ const getDependencies = (file, includes) => {
 	}).filter(f => f.path);
 }
 
-module.exports = {errput, output, getIncludePaths, calculateTree, getDependencies, getDependencyLayers, getDependencyTree};
+module.exports = {errput, output, getIncludePaths, calculateTree, getDependencies, getDependencyLayers, getDependencyTree, getIncludePathsSync};
