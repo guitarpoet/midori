@@ -214,7 +214,7 @@ const getDependencyTree = (args) => {
 
 const getDependencyLayers = (args) => {
 	return new Promise((resolve, reject) => {
-		return getDependencyTree(tree => resolve(tree.layers()));
+		return getDependencyTree(args).then(tree => resolve(tree.layers()));
 	});
 }
 
