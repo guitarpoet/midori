@@ -3,6 +3,7 @@ SCSS_MIDORI_DEP_FILES := $(SCSS_MIDORI_FILES:.midori.scss=_dep.scss)
 
 webpack:
 	$(SILENT) ./node_modules/.bin/webpack
+	$(SILENT) ./chrome.sh reload
 .PHONY: webpack
 
 t: clean tests/css/grid.css $(SCSS_MIDORI_DEP_FILES)
