@@ -17,6 +17,9 @@ let { DependencyTreeNode, DependencyTree } = require("./dependency");
  */
 let globalIncludePaths = ["node_modules", ".", "node_modules/midori"];
 
+/**
+ * Merge the arraies
+ */
 function arrayMerge() {
     let ret = [];
     Array.from(arguments).map(a => {
@@ -38,6 +41,12 @@ function arrayMerge() {
  * Will skip the path if the path is alreay in the paths
  */
 const setGlobalIncludePaths = (arr = []) => {
+    if(globalIncludePaths.length == 3) {
+        // We didn't insert the NODE_PATH into it
+        if(process.env.NODE_PATH) {
+            process.env.NODE_PATH.split(":").map(i => globalIncludePaths.push(i));
+        }
+    }
     if(arr && arr.length) {
         // Update the global include paths if arr is not empty
         globalIncludePaths = arrayMerge(globalIncludePaths, arr.filter(i => globalIncludePaths.indexOf(i) == -1));
