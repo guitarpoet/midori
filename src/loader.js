@@ -42,6 +42,7 @@ const loader = function(content, map) {
                 if(p !== "0") {
                     for(let n of layers[p]) {
                         if(n != "-STD-") {
+                            this.dependency(n);
                             n = stripCssExt(n);
                             data.push(`@import "${n}";`);
                         }
