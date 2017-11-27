@@ -91,6 +91,7 @@ const loader = function(content, map) {
 loader.pitch = function(request) {
     // Track the files as deps
     if(this._module.issuer) {
+        deps = [];
         // Update the processed to false to enable rebuild
         processed = false;
         let name = this._module.issuer.rawRequest;
