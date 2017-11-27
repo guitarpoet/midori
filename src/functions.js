@@ -95,13 +95,8 @@ const getIncludePathsSync = (args = { package_config: "package.json" }) => {
     if(data) {
         let include = args.include || [];
 
+        let includePaths = setGlobalIncludePaths(include);
         let config = JSON.parse(data);
-        if(include) {
-            // Let's add the include paths first
-            for(let i of include) {
-                includePaths.push(i);
-            }
-        }
 
         // Update the config to the scss part of the package.json
         config = config.scss;
@@ -125,18 +120,9 @@ const getIncludePaths = (args = { package_config: "package.json" }) => {
         return getFileContents(module).then(data => {
             let include = args.include || [];
             // Added current folder and the node modules folder by default
-            let includePaths = ["node_modules", "."];
-            // Need to check for midori in the node_modules too
-            includePaths.push("node_modules/midori");
+            let includePaths = setGlobalIncludePaths(include);
 
             let config = JSON.parse(data);
-            if(include) {
-                // Let's add the include paths first
-                for(let i of include) {
-                    includePaths.push(i);
-                }
-            }
-
             // Update the config to the scss part of the package.json
             config = config.scss;
 
