@@ -6,3 +6,4 @@ tests/css/*.css.map
 tests/css/*_dep.scss
 /package-lock.json
 *.map
+tests/webpack-test-bundle.js

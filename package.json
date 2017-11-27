@@ -21,6 +21,7 @@
 		"argparse": "^1.0.9",
 		"node-sass": "^4.7.2",
 		"source-map": "^0.6.1",
+		"underscore": "^1.8.3",
 		"webpack": "^3.8.1"
 	},
 	"scss": {
