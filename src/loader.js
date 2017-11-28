@@ -6,26 +6,12 @@
  * @date Tue Nov 21 16:19:43 2017
  */
 
-let { getIncludePaths, getIncludePathsSync, calculateTree } = require("./functions");
+let { getIncludePaths, getIncludePathsSync, calculateTree, stripCssExt } = require("./functions");
 
 let deps = [];
 let processed = false;
 // Using node sass
 const sass = require("node-sass");
-
-const stripCssExt = (name) => {
-    let index = name.lastIndexOf(".scss");
-
-    if(index == -1) {
-        // This is not the scss file let's check if it is a css file
-        index = name.lastIndexOf(".css");
-    }
-
-    if(index != -1) {
-        name = name.substring(0, index);
-    }
-    return name;
-}
 
 /**
  * The sass loader which will support source map
@@ -49,33 +35,31 @@ const loader = function(content, map) {
                     }
                 }
             }
-            return getIncludePaths().then((includePaths) => {
-                data = data.join("\n");
-                let sourceMapContents = true;
-                let sourceMap = "./sass.map";
+            data = data.join("\n");
+            let sourceMapContents = true;
+            let sourceMap = "./sass.map";
 
-                let omitSourceMapUrl = true;
-                sass.render({
-                    data,
-                    sourceMap,
-                    includePaths,
-                    sourceMapContents,
-                    omitSourceMapUrl
-                }, (err, result) => {
-                    if(err) {
-                        callback(err);
+            let omitSourceMapUrl = true;
+            sass.render({
+                data,
+                sourceMap,
+                includes,
+                sourceMapContents,
+                omitSourceMapUrl
+            }, (err, result) => {
+                if(err) {
+                    callback(err);
+                } else {
+                    let {map} = result;
+                    if(map) {
+                        map = JSON.parse(map);
+                        delete map.file;
+                        map.sources[0] = "--midori-generated--";
                     } else {
-                        let {map} = result;
-                        if(map) {
-                            map = JSON.parse(map);
-                            delete map.file;
-                            map.sources[0] = "--midori-generated--";
-                        } else {
-                            map = {};
-                        }
-                        callback(null, result.css, map);
+                        map = {};
                     }
-                });
+                    callback(null, result.css, map);
+                }
             });
         }).catch(callback);
         processed = true;

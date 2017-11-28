@@ -18,6 +18,24 @@ let { DependencyTreeNode, DependencyTree } = require("./dependency");
 let globalIncludePaths = ["node_modules", ".", "node_modules/midori"];
 
 /**
+ * Remove the css extension
+ */
+const stripCssExt = (name) => {
+    let index = name.lastIndexOf(".scss");
+
+    if(index == -1) {
+        // This is not the scss file let's check if it is a css file
+        index = name.lastIndexOf(".css");
+    }
+
+    if(index != -1) {
+        name = name.substring(0, index);
+    }
+    return name;
+}
+
+
+/**
  * Merge the arraies
  */
 function arrayMerge() {
@@ -267,4 +285,4 @@ const getDependencies = (file, includes) => {
     }).filter(f => f.path);
 }
 
-module.exports = {errput, output, getIncludePaths, calculateTree, getDependencies, getDependencyLayers, getDependencyTree, getIncludePathsSync, setGlobalIncludePaths};
+module.exports = {errput, output, getIncludePaths, calculateTree, getDependencies, getDependencyLayers, getDependencyTree, getIncludePathsSync, setGlobalIncludePaths, stripCssExt};

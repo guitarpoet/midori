@@ -2,7 +2,7 @@
 'use strict';
 
 let  { ArgumentParser } = require("argparse");
-let {errput, output, getIncludePaths, getDependencyLayers, getDependencyTree} = require("./functions");
+let {errput, output, getIncludePaths, getDependencyLayers, getDependencyTree, stripCssExt} = require("./functions");
 
 const parseOptions = () => {
 
@@ -54,7 +54,8 @@ const scss = (args) => {
 			if(p !== "0") {
 				for(let n of layers[p]) {
 					if(n != ".") {
-						output(`@import "${n}";`);
+                        let pp = stripCssExt(n);
+						output(`@import "${pp}";`);
 					}
 				}
 			}
