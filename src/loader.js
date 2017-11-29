@@ -80,15 +80,14 @@ const loader = function(content, map) {
  * Include all files at the pitch phase
  */
 loader.pitch = function(request) {
+    let { issuer } = this._module;
     // Track the files as deps
-    if(this._module.issuer) {
-        deps = [];
-        // Update the processed to false to enable rebuild
-        processed = false;
-        let name = this._module.issuer.rawRequest;
-        let path = request;
-        deps.push({name, path});
-    }
+    deps = [];
+    // Update the processed to false to enable rebuild
+    processed = false;
+    let name = issuer? issuer.rawRequest: "--ANONY--";
+    let path = request;
+    deps.push({name, path});
 }
 
 loader.getIncludePaths = getIncludePathsSync;
