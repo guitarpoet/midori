@@ -10,7 +10,6 @@ let { getIncludePaths, getIncludePathsSync, calculateTree, stripCssExt } = requi
 
 let deps = [];
 let tree = null;
-let data = null;
 let processed = false;
 // Using node sass
 const sass = require("node-sass");
@@ -26,22 +25,20 @@ const loader = function(content, map) {
                 tree = calculateTree(".", "-STD-", deps, includes);
             }
 
-            if(!data) {
-                data = [];
-                let layers = tree.layers();
-                for(let p in layers) {
-                    if(p !== "0") {
-                        for(let n of layers[p]) {
-                            if(n != "-STD-") {
-                                this.dependency(n);
-                                n = stripCssExt(n);
-                                data.push(`@import "${n}";`);
-                            }
+            let data = [];
+            let layers = tree.layers();
+            for(let p in layers) {
+                if(p !== "0") {
+                    for(let n of layers[p]) {
+                        if(n != "-STD-") {
+                            this.dependency(n);
+                            n = stripCssExt(n);
+                            data.push(`@import "${n}";`);
                         }
                     }
                 }
-                data = data.join("\n");
             }
+            data = data.join("\n");
 
             let sourceMapContents = true;
             let sourceMap = "./sass.map";
