@@ -86,7 +86,7 @@ const getFileContents = (path) => {
             if(err) {
                 reject(`Error: Reading file ${path} -> ${err}`);
             } else {
-                fs.readFile(path, (err, data) => {
+                fs.readFile(path, "utf-8", (err, data) => {
                     if(err) {
                         reject(`Error: Reading file ${module} -> ${err}`);
                     } else {
@@ -100,7 +100,7 @@ const getFileContents = (path) => {
 
 const getFileContentsSync = (path) => {
     if(fs.existsSync(path)) {
-        return fs.readFileSync(path);
+        return fs.readFileSync(path, "utf-8");
     }
     return false;
 }
@@ -161,7 +161,7 @@ const getIncludePaths = (args = { package_config: "package.json" }) => {
 const getImportsSync = (file) => {
     let data = getFileContentsSync(file);
     let imports = [];
-    new String(data).split("\n").map((line) => {
+    data.split("\n").map((line) => {
         let code = line.trim();
         if(code.indexOf(IMPORT_PREFIX) === 0) {
             let d = code.substring(IMPORT_PREFIX.length).trim();
@@ -178,7 +178,7 @@ const getImports = (file) => {
     return new Promise((resolve, reject) => {
         return getFileContents(file).then(data => {
             let imports = [];
-            new String(data).split("\n").map((line) => {
+            data.split("\n").map((line) => {
                 let code = line.trim();
                 if(code.indexOf(IMPORT_PREFIX) === 0) {
                     let d = code.substring(IMPORT_PREFIX.length).trim();
