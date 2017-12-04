@@ -54,6 +54,9 @@ const loader = function(content, map) {
                 if(err) {
                     callback(err);
                 } else {
+                    // Remove the data after the build to avoid the out of memory
+                    delete data;
+                    data = null; // Force update it again
                     let {map} = result;
                     if(map) {
                         map = JSON.parse(map);
