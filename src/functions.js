@@ -197,6 +197,8 @@ const generateImportNames = (imp) => {
     let first = imp.shift();
     if(imp.length) {
         for(let name of generateImportNames(imp)) {
+            files.push(`midori/_${first}/${name}`);
+            files.push(`midori/${first}/${name}`);
             files.push(`_${first}/${name}`);
             files.push(`${first}/${name}`);
         }
