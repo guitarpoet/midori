@@ -2,7 +2,7 @@
 'use strict';
 
 let  { ArgumentParser } = require("argparse");
-let {errput, output, getIncludePaths, getDependencyLayers, getDependencyTree, stripCssExt} = require("./functions");
+let {errput, output, getIncludePaths, getDependencyLayers, getDependencyTree, stripCssExt, saveImportCache} = require("./functions");
 
 const parseOptions = () => {
 
@@ -88,6 +88,8 @@ let func = functions[type];
 
 if(func) {
 	func(args);
+    // Save the import cache anyway
+    saveImportCache();
 } else {
 	output(`Can't find output type ${type}`);
 }

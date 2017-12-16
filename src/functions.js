@@ -7,10 +7,13 @@
  */
 
 const IMPORT_PREFIX = "* @import";
+const CACHE_FILE = ".midori_cache";
 const fs = require("fs");
 let path_resolve = require("path").resolve;
+let path_join = require("path").join;
 let { isArray } = require("underscore");
 let { DependencyTreeNode, DependencyTree } = require("./dependency");
+let globalImportCache = null;
 
 /**
  * The global include paths
@@ -158,37 +161,52 @@ const getIncludePaths = (args = { package_config: "package.json" }) => {
     });
 }
 
-const getImportsSync = (file) => {
-    let data = getFileContentsSync(file);
-    let imports = [];
-    data.split("\n").map((line) => {
-        let code = line.trim();
-        if(code.indexOf(IMPORT_PREFIX) === 0) {
-            let d = code.substring(IMPORT_PREFIX.length).trim();
-            d.split(",").map((e) => {
-                imports.push(e.trim());
-            });
+const getImportCache = () => {
+    if(!globalImportCache) {
+        let filePath = path_resolve(path_join(process.cwd(), CACHE_FILE));
+        if(fs.existsSync(filePath)) {
+            // If the file exists, let's get it
+            globalImportCache = JSON.parse(getFileContentsSync(filePath));
+        } else {
+            globalImportCache = {};
         }
-    });
-    return imports;
+    }
+    return globalImportCache;
 }
 
+const saveImportCache = () => {
+    const CACHE_FILE = ".midori_cache";
+    let filePath = path_resolve(path_join(process.cwd(), CACHE_FILE));
+    fs.writeFileSync(filePath, JSON.stringify(globalImportCache));
+}
+
+const getImportsSync = (file) => {
+    let cache = getImportCache();
+    let { mtimeMs } = fs.statSync(file);
+    if(cache[file] && cache[file].mtimeMs == mtimeMs) {
+        return cache[file].imports;
+    } else {
+        let data = getFileContentsSync(file);
+        let imports = [];
+        data.split("\n").map((line) => {
+            let code = line.trim();
+            if(code.indexOf(IMPORT_PREFIX) === 0) {
+                let d = code.substring(IMPORT_PREFIX.length).trim();
+                d.split(",").map((e) => {
+                    imports.push(e.trim());
+                });
+            }
+        });
+
+        // Save the imports value to the cache
+        cache[file] = { imports, mtimeMs }
+        return imports;
+    }
+}
 
 const getImports = (file) => {
     return new Promise((resolve, reject) => {
-        return getFileContents(file).then(data => {
-            let imports = [];
-            data.split("\n").map((line) => {
-                let code = line.trim();
-                if(code.indexOf(IMPORT_PREFIX) === 0) {
-                    let d = code.substring(IMPORT_PREFIX.length).trim();
-                    d.split(",").map((e) => {
-                        imports.push(e.trim());
-                    });
-                }
-            });
-            resolve(imports);
-        });
+        resolve(getImportsSync(file));
     });
 }
 
@@ -209,13 +227,25 @@ const generateImportNames = (imp) => {
 }
 
 const resolveImportFiles = (imp, includes) => {
-    let files = generateImportNames(imp);
-    for(let i of includes) {
-        for(let file of files) {
-            for(let ext of ["scss", "sass", "css"]) {
-                let path = `${i}/${file}.${ext}`;
-                if(fs.existsSync(path)) {
-                    return path_resolve(path);
+    let key = imp.join("/");
+    let cache = getImportCache();
+    if(!cache._resolve) {
+        cache._resolve = {};
+    }
+
+    if(cache._resolve[key]) {
+        return cache._resolve[key];
+    } else {
+        let files = generateImportNames(imp);
+        for(let i of includes) {
+            for(let file of files) {
+                for(let ext of ["scss", "sass", "css"]) {
+                    let path = `${i}/${file}.${ext}`;
+                    if(fs.existsSync(path)) {
+                        let p = path_resolve(path);
+                        cache._resolve[key] = p;
+                        return p;
+                    }
                 }
             }
         }
@@ -287,4 +317,4 @@ const getDependencies = (file, includes) => {
     }).filter(f => f.path);
 }
 
-module.exports = {errput, output, getIncludePaths, calculateTree, getDependencies, getDependencyLayers, getDependencyTree, getIncludePathsSync, setGlobalIncludePaths, stripCssExt};
+module.exports = {errput, output, getIncludePaths, calculateTree, getDependencies, getDependencyLayers, getDependencyTree, getIncludePathsSync, setGlobalIncludePaths, stripCssExt, saveImportCache};

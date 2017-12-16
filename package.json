@@ -21,7 +21,7 @@
 	},
 	"dependencies": {
 		"argparse": "^1.0.9",
-		"underscore": "^1.8.3"
+		"lodash": "^4.17.4"
 	},
 	"scss": {
 		"lib": {

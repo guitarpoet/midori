@@ -6,7 +6,7 @@
  * @date Tue Nov 21 16:19:43 2017
  */
 
-let { getIncludePaths, getIncludePathsSync, calculateTree, stripCssExt } = require("./functions");
+let { getIncludePaths, getIncludePathsSync, calculateTree, stripCssExt, saveImportCache } = require("./functions");
 
 let deps = [];
 let tree = null;
@@ -24,6 +24,9 @@ const loader = function(content, map) {
             if(!tree) {
                 tree = calculateTree(".", "-STD-", deps, includes);
             }
+
+            // Let's save the import cache then
+            saveImportCache();
 
             let data = [];
             let layers = tree.layers();
