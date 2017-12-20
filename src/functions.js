@@ -249,8 +249,8 @@ const resolveImportFiles = (imp, includes) => {
                 }
             }
         }
+        console.error("Can't find any files.", files, includes);
     }
-    console.error("Can't find any files.", files, includes);
     return false;
 }
 
