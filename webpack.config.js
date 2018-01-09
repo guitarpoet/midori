@@ -1,11 +1,14 @@
 const path = require("path");
-let { getIncludePaths } = require("./src/loader");
+let { getIncludePaths, MidoriPlugin } = require("./src/loader");
 
 let includePaths = getIncludePaths();
 
 module.exports = {
 	devtool: "source-map",
-	entry: path.resolve(__dirname, "tests/webpack-test.js"),
+	entry: {
+        test: path.resolve(__dirname, "tests/webpack-test.js"),
+        another:  path.resolve(__dirname, "tests/webpack-test-again.js")
+    },
 	module: {
 		rules: [
 			{
@@ -38,8 +41,11 @@ module.exports = {
 			}
 		]
 	},
+    plugins: [
+        new MidoriPlugin()
+    ],
 	output: {
-		path: path.resolve(__dirname, "tests"),
-		filename: "webpack-test-bundle.js"
+		path: path.resolve(__dirname, "tests/output"),
+		filename: "[name]-bundle.js"
 	}
 };

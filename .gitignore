@@ -6,5 +6,7 @@ tests/css/*.css.map
 tests/css/*_dep.scss
 /package-lock.json
 *.map
+tests/output
 tests/webpack-test-bundle.js
 tests/css/test.css.map
+/.midori_cache
