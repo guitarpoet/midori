@@ -18,7 +18,7 @@ let globalImportCache = null;
 /**
  * The global include paths
  */
-let globalIncludePaths = ["node_modules", ".", "node_modules/midori"];
+let globalIncludePaths = ["node_modules", ".", "node_modules/@guitarpoet/midori"];
 
 /**
  * Remove the css extension
