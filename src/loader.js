@@ -7,7 +7,7 @@
  */
 
 const { getIncludePaths, getIncludePathsSync, calculateTree, stripCssExt, saveImportCache, getRootRequest } = require("./functions");
-const { keys, values } = require("lodash");
+const { keys, values, isArray } = require("lodash");
 const MidoriPlugin = require("./plugin");
 
 let deps = {};
@@ -26,6 +26,10 @@ const getEntries = (context) => {
 }
 
 const getDepends = (module) => {
+    if(isArray(module) && module.length > 1) {
+        // We are in the dev server now
+        module = module[1];
+    }
     let map = {};
     // Let's get the dependes now
     let m = global._midori_modules_data[module];
@@ -47,7 +51,7 @@ const getDepends = (module) => {
  */
 const loader = function(content, map) {
     let callback = this.async();
-    let entries = getEntries(this);
+    let entries = getEntries(this._compilation);
 
     let { _module: { resource } } = this;
 

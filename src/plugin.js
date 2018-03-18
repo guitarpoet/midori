@@ -1,3 +1,5 @@
+const { flatten } = require("lodash");
+
 class MidoriPlugin {
     constructor(options = {}) {
         this.options = options;
@@ -45,17 +47,18 @@ class MidoriPlugin {
         global.modules = {};
 
         // We are at the compilation process
-        compiler.plugin("compilation", (compilation) => {
+        compiler.hooks.compilation.tap("compilation", (compilation) => {
             if(compilation.compiler.isChild()) return;
-            compilation.plugin("midori-dep-hook", (module, dependencies) => {
+            compilation.hooks.addModuleDependencies.tap("addModuleDependencies", (module, dependencies) => {
 
                 // Let's get the pure dependencies first
-                let plainDependencies = dependencies.map(d => d.filter(i => i.request).map(i => i.request)).filter(i => i.length);
+                let plainDependencies = dependencies.map(d => d.dependencies.filter(i => i.request).map(i => i.request)).filter(i => i.length);
 
                 plainDependencies.map(d => d.map(i => {
                     if(i.indexOf("!") == -1) {
+                        let resolver = compiler.resolverFactory.get("normal");
                         // Only resolve the one that won't have loader things
-                        compiler.resolvers.normal.resolve({}, module.context, i, (err, path) => {
+                        resolver.resolve({}, module.context, i, (err, path) => {
                             if(!err) {
                                 this.addDependency(module.resource, path);
                             }

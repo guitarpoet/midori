@@ -1,6 +1,6 @@
 {
 	"name": "@guitarpoet/midori",
-	"version": "0.0.2",
+	"version": "1.0.0",
 	"description": "The swiss knife for making sass better to use.",
 	"directories": {
 		"test": "tests"
@@ -13,11 +13,11 @@
 	"author": "Jack <jack.fu@cxagroup.com>",
 	"license": "BSD",
 	"devDependencies": {
-		"css-loader": "^0.28.7",
-		"style-loader": "^0.19.0",
+		"css-loader": "^0.28.11",
 		"node-sass": "^4.7.2",
 		"source-map": "^0.6.1",
-		"webpack": "^3.8.1"
+		"style-loader": "^0.19.1",
+		"webpack": "^4.1.1"
 	},
 	"dependencies": {
 		"argparse": "^1.0.9",
