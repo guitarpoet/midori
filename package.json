@@ -1,6 +1,6 @@
 {
 	"name": "@guitarpoet/midori",
-	"version": "1.0.0",
+	"version": "1.0.1",
 	"description": "The swiss knife for making sass better to use.",
 	"directories": {
 		"test": "tests"

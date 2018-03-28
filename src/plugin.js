@@ -58,7 +58,7 @@ class MidoriPlugin {
                     if(i.indexOf("!") == -1) {
                         let resolver = compiler.resolverFactory.get("normal");
                         // Only resolve the one that won't have loader things
-                        resolver.resolve({}, module.context, i, (err, path) => {
+                        resolver.resolve({}, module.context, i, {}, (err, path) => {
                             if(!err) {
                                 this.addDependency(module.resource, path);
                             }
